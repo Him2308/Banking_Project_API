@@ -1,0 +1,48 @@
+bundle:
+  name: Banking_Project_API_DAB
+  uuid: 0c8b9f49-363a-4956-8db8-43c4c2c9436d
+
+include:
+  - resources/*.yml
+  - resources/*/*.yml
+
+# ✅ Declare ALL variables here
+variables:
+  catalog:
+    description: The catalog to use
+  schema:
+    description: The schema to use
+  pipeline_development:   # ✅ ADD THIS
+    description: Whether pipeline runs in development mode
+
+targets:
+  dev:
+    mode: development
+    default: true
+
+    presets:
+      name_prefix: dev_${workspace.current_user.short_name}
+      source_linked_deployment: false
+
+    workspace:
+      host: https://dbc-a7519604-dc1f.cloud.databricks.com/
+
+    variables:
+      catalog: workspace
+      schema: ${workspace.current_user.short_name}
+      pipeline_development: true   # ✅ moved here
+
+  prod:
+    mode: production
+
+    workspace:
+      host: https://dbc-a7519604-dc1f.cloud.databricks.com/
+      root_path: /Workspace/Users/himanshusachdeva711@gmail.com/PROD/.bundle/${bundle.name}/${bundle.target}
+
+    variables:
+      catalog: workspace
+      schema: prod
+      pipeline_development: false  # ✅ moved here
+
+    presets:
+      pipelines_development: false   # ✅ correct key (note 's')

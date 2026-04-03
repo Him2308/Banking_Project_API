@@ -1,0 +1,22 @@
+resources:
+  jobs:
+    Banking_Project_API_DAB_Pipeline:
+      name: Banking_Project_API_DAB_Pipeline
+      tasks:
+        - task_key: Ingestion
+          notebook_task:
+            notebook_path: /Workspace/Users/himanshusachdeva711@gmail.com/Banking_Project_API/Banking_Project_API_DAB/src/notebooks/API_Call
+            base_parameters:
+              catalog_name: ${var.catalog_name}
+            source: WORKSPACE
+        - task_key: DLT_Pipeline
+          depends_on:
+            - task_key: Ingestion
+          notebook_task:
+            notebook_path: /Workspace/Users/himanshusachdeva711@gmail.com/Banking_Project_API/Banking_Project_API_DAB/src/notebooks/DLT_Pipeline
+            base_parameters:
+              catalog_name: Banking_Project_API_DAB
+            source: WORKSPACE
+      queue:
+        enabled: true
+      performance_target: PERFORMANCE_OPTIMIZED
