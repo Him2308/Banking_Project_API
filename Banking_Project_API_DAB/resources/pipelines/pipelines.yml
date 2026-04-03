@@ -1,0 +1,20 @@
+resources:
+  pipelines:
+    pipeline_banking_project_api_pipeline:
+      name: Banking_Project_API_Pipeline_${bundle.target}   # ✅ dynamic name
+
+      libraries:
+        - glob:
+            include: ../../src/pipelines/Banking_Project_API_Pipeline/transformations/**
+
+      schema: ${var.schema}        # ✅ dynamic
+      catalog: ${var.catalog_name} # ✅ dynamic
+
+      continuous: false
+      development: ${var.pipeline_development}  # ✅ dynamic
+
+      photon: true
+      channel: CURRENT
+      serverless: true
+
+      root_path: ../../src/pipelines/Banking_Project_API_Pipeline

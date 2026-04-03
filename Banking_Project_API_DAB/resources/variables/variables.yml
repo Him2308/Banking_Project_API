@@ -1,0 +1,3 @@
+variables:
+  catalog_name:
+    default: Banking_Project_API_DAB
